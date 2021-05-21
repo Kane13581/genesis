@@ -17,11 +17,13 @@
           </div>
         </div>
 
-        <div class="mainContainer h-4/6 md:h-5/6 md:w-full">
+        <div class="mainContainer relative md:grid grid-cols-4 gap-28 h-4/6 md:h-5/6 md:w-full">
           <div v-for="(destination, index) in destinations" :key="index">
+            <div class="card">
             <router-link to="`/countries/${destination.id}`">
               {{destination.name}}
             </router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -39,7 +41,6 @@ data() {
     destinations: store.destinations
   }
 }
-
 }
 
 
@@ -48,6 +49,13 @@ data() {
 <style>
 .overallContainer {
   border: green solid 5px;
+}
+
+.card {
+  margin-top: 3rem;
+  border: red 5px solid;
+  height: 16rem;
+  width: 12rem;
 }
 
 .navContainer {
@@ -73,7 +81,7 @@ data() {
 }
 
 .mainContainer {
-  border: red 1px solid;
+  /*border: red 1px solid;*/
 }
 
 </style>
