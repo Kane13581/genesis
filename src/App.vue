@@ -1,28 +1,60 @@
 <template>
   <div id="nav">
+    <div class="overallContainer flex justify-center min-h-screen bg-yellow-300 p-10">
 
+      <div class="navContainer h-44 md:space-y-0 md:w-3/4">
+        <div class="wrapper">
+          <div class="inputContainer md:flex md:flex-col md:w-1/2 h-24 ">
+            <p>Favorites here</p>
+          </div>
+          <div class="topRightTab md:w-1/2 h-32 relative">
+            <div class="favButtonCont md:w-1/2 md:absolute">
+              <button>Favorites</button>
+            </div>
+            <div class="newButtonCont md:w-1/2 md:absolute">
+              <button>New</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="mainContainer h-4/5 md:space-y-0 md:w-3/4">
+
+        </div>
+      </div>
+
+    </div>
   </div>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+.overallContainer {
+  border: green solid 5px;
 }
 
-#nav {
-  padding: 30px;
+.navContainer {
+ border: solid red 5px;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.inputContainer {
+  border: white solid 1px;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+.topRightTab {
+  border: blue solid 1px;
 }
+.favButtonCont {
+  border: 1px white solid;
+  right: 0;
+}
+
+.newButtonCont {
+  border: 1px white solid;
+  right: 0;
+  top: 4rem;
+}
+
+.mainContainer {
+  border: red 1px solid;
+}
+
 </style>
