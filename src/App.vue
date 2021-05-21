@@ -2,16 +2,16 @@
   <div id="nav">
     <div class="overallContainer flex justify-center min-h-screen bg-yellow-300 p-10">
 
-      <div class="navContainer h-44 md:space-y-0 md:w-3/4">
-        <div class="wrapper">
+      <div class="navContainer sm:w-96 h-44 md:space-y-0 md:w-3/4">
+        <div class="wrapper md:flex ">
           <div class="inputContainer md:flex md:flex-col md:w-1/2 h-24 ">
             <p>Favorites here</p>
           </div>
-          <div class="topRightTab md:w-1/2 h-32 relative">
-            <div class="favButtonCont md:w-1/2 md:absolute">
+          <div class="topRightTab md:w-1/2 h-24 relative">
+            <div class="favButtonCont md:w-1/5 md:absolute">
               <button>Favorites</button>
             </div>
-            <div class="newButtonCont md:w-1/2 md:absolute">
+            <div class="newButtonCont md:w-1/5 md:absolute">
               <button>New</button>
             </div>
           </div>
@@ -31,9 +31,9 @@
   border: green solid 5px;
 }
 
-.navContainer {
- border: solid red 5px;
-}
+/*.navContainer {*/
+/* border: solid red 5px;*/
+/*}*/
 
 .inputContainer {
   border: white solid 1px;
