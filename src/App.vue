@@ -2,12 +2,12 @@
   <div id="nav">
     <div class="overallContainer flex justify-center min-h-screen bg-yellow-300 p-10">
 
-      <div class="navContainer sm:w-96 h-44 md:space-y-0 md:w-3/4">
+      <div class="navContainer md:relative flex-grow h-11/12 md:w-3/4">
         <div class="wrapper md:flex ">
-          <div class="inputContainer md:flex md:flex-col md:w-1/2 h-24 ">
+          <div class="inputContainer relative md:flex md:flex-col md:w-1/2 h-32 ">
             <p>Favorites here</p>
           </div>
-          <div class="topRightTab md:w-1/2 h-24 relative">
+          <div class="topRightTab md:w-1/2 h-32 relative">
             <div class="favButtonCont md:w-1/5 md:absolute">
               <button>Favorites</button>
             </div>
@@ -17,11 +17,10 @@
           </div>
         </div>
 
-        <div class="mainContainer h-4/5 md:space-y-0 md:w-3/4">
+        <div class="mainContainer h-4/6 md:h-5/6 md:w-full">
 
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -31,9 +30,9 @@
   border: green solid 5px;
 }
 
-/*.navContainer {*/
-/* border: solid red 5px;*/
-/*}*/
+.navContainer {
+ /*border: solid red 5px;*/
+}
 
 .inputContainer {
   border: white solid 1px;
