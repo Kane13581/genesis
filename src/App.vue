@@ -3,7 +3,7 @@
     <div class="overallContainer flex justify-center min-h-screen bg-yellow-300 p-10">
 
       <div class="navContainer md:relative flex-grow h-11/12 md:w-3/4">
-        <div class="wrapper md:flex ">
+        <div class="wrapper md:flex">
           <div class="inputContainer relative md:flex md:flex-col md:w-1/2 h-32 ">
             <p>Favorites here</p>
           </div>
@@ -16,15 +16,14 @@
             </div>
           </div>
         </div>
-
-        <div class="mainContainer relative md:grid grid-cols-4 gap-28 h-4/6 md:h-5/6 md:w-full">
-          <div v-for="(destination, index) in destinations" :key="index">
-            <div class="card">
+        <div class="secondWrapper grid justify-center">
+        <div class="mainContainer md:grid grid-cols-4 gap-28 justify-center h-4/6 md:h-5/6 md:w-full">
+          <div class="card flex justify-center" v-for="(destination, index) in destinations" :key="index">
             <router-link to="`/countries/${destination.id}`">
-              {{destination.name}}
+              {{ destination.name }}
             </router-link>
-            </div>
           </div>
+        </div>
         </div>
       </div>
     </div>
@@ -54,8 +53,12 @@ data() {
 .card {
   margin-top: 3rem;
   border: red 5px solid;
-  height: 16rem;
-  width: 12rem;
+  height: 20rem;
+  width: 14rem;
+}
+
+.secondWrapper {
+  border: 1px white solid;
 }
 
 .navContainer {
