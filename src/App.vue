@@ -1,5 +1,5 @@
 <template>
-  <div id="nav">
+  <div id="app">
     <div class="overallContainer flex justify-center min-h-screen bg-yellow-300 p-10">
 
       <div class="navContainer md:relative flex-grow h-11/12 md:w-3/4">
@@ -18,12 +18,32 @@
         </div>
 
         <div class="mainContainer h-4/6 md:h-5/6 md:w-full">
-
+          <div v-for="(destination, index) in destinations" :key="index">
+            <router-link to="`/countries/${destination.id}`">
+              {{destination.name}}
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+import store from "./views/store";
+
+export default {
+name: "App",
+data() {
+  return {
+    destinations: store.destinations
+  }
+}
+
+}
+
+
+</script>
 
 <style>
 .overallContainer {
