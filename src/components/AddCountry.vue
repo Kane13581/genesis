@@ -1,8 +1,8 @@
 <template>
   <div class="mainContainer">
     <form @submit.prevent="sendCountryInfo">
-      <input v-model="name" class="inputStyle">
-<!--      <input v-model="description" class="inputStyle">-->
+      <input placeholder="Country Name" v-model="name" class="inputStyle">
+      <input placeholder="Country Description" v-model="description" class="inputStyle">
       <button>Add</button>
     </form>
   </div>
@@ -13,19 +13,19 @@ export default {
   name: "AddCountry",
   data() {
     return {
-      name: "",
-      description: "",
+      name: '',
+      description: ''
     }
   },
   methods: {
     sendCountryInfo: function() {
       const newCountry = {
-        name: this.name.toString(),
-
+        name: this.name,
+        description: this.description,
       };
       this.$emit("add-new-country", newCountry);
       this.name = "";
-
+      this.description = "";
     }
   }
 }

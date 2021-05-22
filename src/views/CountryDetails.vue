@@ -13,7 +13,6 @@ import store from "./store";
 
 export default {
 
-
   name: "CountryDetails",
   data() {
     return {

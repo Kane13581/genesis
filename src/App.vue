@@ -13,27 +13,33 @@
             </div>
             <div class="newButtonCont md:w-1/5 md:absolute">
               <button @click="toggleNewCountry">New</button>
-              <AddCountry @add-new-country="addNewCountry" v-if="showInputCountry" />
+              <AddCountry @add-new-country="addNewCountry" v-if="showInputCountry"/>
             </div>
           </div>
         </div>
         <div class="secondWrapper grid justify-center">
-        <div class="mainContainer md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-28 justify-center h-4/6 md:h-5/6 md:w-full">
-          <div class="card" v-for="(destination, index) in destinations || []" :key="index">
-            <div class="countryName flex justify-center">
-              <p class="text-2xl">{{ destination.name }}</p>
-            </div>
-            <img class="imageStyle h-48" :src="require(`./assets/${destination.image}`)" :alt="destination.name">
-            <p class="ml-1 truncate">{{ destination.description }}</p>
-              <div class="imageButtonContainer flex justify-around mt-3">
-                <button class="text-2xl hover:shadow-lg ">Delete</button>
-                <button class="text-2xl hover:shadow-lg">View</button>
+          <div
+              class="mainContainer md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-28 justify-center h-4/6 md:h-5/6 md:w-full">
+            <div class="card" v-for="(destination, index) in destinations || []" :key="index">
+              <div class="countryName flex justify-center">
+                <p class="text-2xl">{{ destination.name }}</p>
               </div>
+              <img class="imageStyle h-48" :src="require(`./assets/${destination.image}`)" :alt="destination.name">
+              <p class="ml-1 truncate">{{ destination.description }}</p>
+              <div class="imageButtonContainer flex justify-around mt-3">
+                <button @click="deleteCountry(index)" class="text-2xl hover:shadow-lg ">Delete</button>
+                <Home/>
+                <!--                <div>-->
+                <!--                  <router-link :to="`/countries/${destination.id}`">-->
+                <!--                    <button class="text-2xl hover:shadow-lg">View</button>-->
+                <!--                  </router-link>-->
+                <!--                </div>-->
+                <!--                <router-view/>-->
+              </div>
+            </div>
           </div>
         </div>
-        </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -41,51 +47,52 @@
 <script>
 import store from "./views/store";
 import AddCountry from "@/components/AddCountry";
+import Home from "./views/Home";
 
 
 export default {
-name: "App",
+  name: "App",
   components: {
-  AddCountry,
+    AddCountry,
+    Home,
   },
-data() {
-  return {
-    showInputCountry: false,
-    destinations: store.destinations,
-    destinationId: this.$route.params.id,
-
-    newList: store.destinations,
-    newListName: store.destinations,
-    newListSlug: store.destinations,
-  }
-},
+  data() {
+    return {
+      showInputCountry: false,
+      destinations: store.destinations,
+      destinationId: this.$route.params.id,
+    }
+  },
   computed: {
-  destination() {
-    return store.destinations.find(
-        destination => destination.id === this.destinationId
-    )
-  }
+    destination() {
+      return store.destinations.find(
+          destination => destination.id === this.destinationId
+      )
+    }
   },
   methods: {
 
     toggleNewCountry() {
       this.showInputCountry = !this.showInputCountry;
     },
-    addNewCountry() {
+    addNewCountry(newCountry) {
       this.destinations.push({
-      name: 'Brazil',
-      slug: 'brazil',
-      image: 'brazil.jpg',
-        id: this.newList.length - 1 + 1,
-        description: 'Alasda',
+        name: newCountry.name,
+        slug: 'brazil',
+        image: 'brazil.jpg',
+        id: this.destinations.length - 1 + 1,
+        description: newCountry.description,
         experiences: [{
-        name: 'new',
-          slug: 'som',
-          image: 'sadas',
-          description: 'asdads'
+          name: 'New Country new Experiences',
+          slug: 'Eden',
+          image: '',
+          description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'
         }]
       })
-      console.log(this.newListName)
+      console.log(this.destinations)
+    },
+    deleteCountry(index) {
+      this.destinations.splice(index, 1)
     }
   }
 }
@@ -111,7 +118,7 @@ data() {
 }
 
 .navContainer {
- /*border: solid red 5px;*/
+  /*border: solid red 5px;*/
 }
 
 .inputContainer {
@@ -121,6 +128,7 @@ data() {
 .topRightTab {
   border: blue solid 1px;
 }
+
 .favButtonCont {
   border: 1px white solid;
   right: 0;
