@@ -1,9 +1,9 @@
 <template>
   <div>
     {{ countryId }}
-    {{ getContryDetails.name}}
+    {{ getCountryDetails.name}}
     <br>
-    {{getContryDetails.description}}
+    {{getCountryDetails.description}}
   </div>
 </template>
 
@@ -23,7 +23,7 @@ export default {
   },
   methods: {},
   computed: {
-    getContryDetails() {
+    getCountryDetails() {
       if(this.countryDetails.length === 0) {
         return
       }

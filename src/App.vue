@@ -12,17 +12,19 @@
               <button>Favorites</button>
             </div>
             <div class="newButtonCont md:w-1/5 md:absolute">
-              <button>New</button>
+              <button @click="toggleNewCountry">New</button>
+              <AddCountry @add-new-country="addNewCountry" v-if="showInputCountry" />
             </div>
           </div>
         </div>
         <div class="secondWrapper grid justify-center">
         <div class="mainContainer md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-28 justify-center h-4/6 md:h-5/6 md:w-full">
-          <div class="card" v-for="(destination, index) in destinations" :key="index">
+          <div class="card" v-for="(destination, index) in destinations || []" :key="index">
             <div class="countryName flex justify-center">
               <p class="text-2xl">{{ destination.name }}</p>
             </div>
-              <img class="imageStyle h-56" :src="require(`./assets/${destination.image}`)" :alt="destination.name">
+            <img class="imageStyle h-48" :src="require(`./assets/${destination.image}`)" :alt="destination.name">
+            <p class="ml-1 truncate">{{ destination.description }}</p>
               <div class="imageButtonContainer flex justify-around mt-3">
                 <button class="text-2xl hover:shadow-lg ">Delete</button>
                 <button class="text-2xl hover:shadow-lg">View</button>
@@ -31,19 +33,30 @@
         </div>
         </div>
       </div>
+
     </div>
   </div>
 </template>
 
 <script>
 import store from "./views/store";
+import AddCountry from "@/components/AddCountry";
+
 
 export default {
 name: "App",
+  components: {
+  AddCountry,
+  },
 data() {
   return {
+    showInputCountry: false,
     destinations: store.destinations,
-    destinationId: this.$route.params.id
+    destinationId: this.$route.params.id,
+
+    newList: store.destinations,
+    newListName: store.destinations,
+    newListSlug: store.destinations,
   }
 },
   computed: {
@@ -52,6 +65,28 @@ data() {
         destination => destination.id === this.destinationId
     )
   }
+  },
+  methods: {
+
+    toggleNewCountry() {
+      this.showInputCountry = !this.showInputCountry;
+    },
+    addNewCountry() {
+      this.destinations.push({
+      name: 'Brazil',
+      slug: 'brazil',
+      image: 'brazil.jpg',
+        id: this.newList.length - 1 + 1,
+        description: 'Alasda',
+        experiences: [{
+        name: 'new',
+          slug: 'som',
+          image: 'sadas',
+          description: 'asdads'
+        }]
+      })
+      console.log(this.newListName)
+    }
   }
 }
 
