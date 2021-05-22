@@ -17,11 +17,13 @@
           </div>
         </div>
         <div class="secondWrapper grid justify-center">
-        <div class="mainContainer md:grid grid-cols-4 gap-28 justify-center h-4/6 md:h-5/6 md:w-full">
-          <div class="card flex justify-center" v-for="(destination, index) in destinations" :key="index">
-            <router-link to="`/countries/${destination.id}`">
+        <div class="mainContainer md:grid md:grid-cols-3 lg:grid-cols-4 gap-28 justify-center h-4/6 md:h-5/6 md:w-full">
+          <div class="card" v-for="(destination, index) in destinations" :key="index">
+<!--            <router-link :to="`/countries/${destination.id}`">-->
               {{ destination.name }}
-            </router-link>
+            <br>
+              <img :src="require(`./assets/${destination.image}`)" :alt="destination.name">
+<!--            </router-link>-->
           </div>
         </div>
         </div>
@@ -37,9 +39,17 @@ export default {
 name: "App",
 data() {
   return {
-    destinations: store.destinations
+    destinations: store.destinations,
+    destinationId: this.$route.params.id
   }
-}
+},
+  computed: {
+  destination() {
+    return store.destinations.find(
+        destination => destination.id === this.destinationId
+    )
+  }
+  }
 }
 
 
@@ -55,6 +65,7 @@ data() {
   border: red 5px solid;
   height: 20rem;
   width: 14rem;
+
 }
 
 .secondWrapper {
