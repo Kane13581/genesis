@@ -1,9 +1,14 @@
 <template>
-  <div>
-    {{ countryId }}
-    {{ getCountryDetails.name}}
-    <br>
-    {{getCountryDetails.description}}
+  <div class="overallCountry grid grid-cols-1 justify-center">
+    <div class="countryName">
+      <p class="text-2xl">Welcome to {{ getCountryDetails.name }} </p>
+    </div>
+    <div class="countryImage">
+      <img :src="require(`../assets/${getCountryDetails.image}`)" :alt="getCountryDetails.name">
+    </div>
+    <div class="countryDetails">
+      {{ getCountryDetails.description }}
+    </div>
   </div>
 </template>
 
@@ -20,22 +25,26 @@ export default {
       countryDetails: store.destinations,
     }
   },
-  methods: {},
+  methods: {
+    emitBackAction() {
+      this.$emit("emit-back-action")
+    }
+  },
   computed: {
     getCountryDetails() {
-      if(this.countryDetails.length === 0) {
+      if (this.countryDetails.length === 0) {
         return
       }
       let x = this.countryDetails.filter((country) => {
-        return  country.id.toString() === this.countryId.toString()
+        return country.id.toString() === this.countryId.toString()
       })
       return x[0]
-    }
-  }
+    },
+  },
+
 
 };
 </script>
-
 
 
 <style scoped>

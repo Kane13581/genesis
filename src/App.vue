@@ -1,8 +1,18 @@
 <template>
   <div id="app">
     <div class="overallContainer flex justify-center min-h-screen bg-yellow-300 p-10">
-
-      <div class="navContainer md:relative flex-grow h-11/12 md:w-3/4">
+      <div class="backButton hover:shadow-lg">
+      <button @click="showAgain" v-if="showIndividualCountry">
+        <router-link to="/">
+          Back
+        </router-link>
+      </button>
+      </div>
+      <div v-if="showIndividualCountry" class="routerViewContainer">
+        <router-view>
+        </router-view>
+      </div>
+      <div v-else class="navContainer md:relative flex-grow h-11/12 md:w-3/4">
         <div class="wrapper md:flex">
           <div class="inputContainer relative md:flex md:flex-col md:w-1/2 h-32 ">
             <p>Favorites here</p>
@@ -28,39 +38,38 @@
               <p class="ml-1 truncate">{{ destination.description }}</p>
               <div class="imageButtonContainer flex justify-around mt-3">
                 <button @click="deleteCountry(index)" class="text-2xl hover:shadow-lg ">Delete</button>
-                <Home/>
-                <!--                <div>-->
-                <!--                  <router-link :to="`/countries/${destination.id}`">-->
-                <!--                    <button class="text-2xl hover:shadow-lg">View</button>-->
-                <!--                  </router-link>-->
-                <!--                </div>-->
-                <!--                <router-view/>-->
+                <router-link :to="`/countries/${destination.id}`">
+                  <button class="text-2xl hover:shadow-lg" @click="toggleShowIndividual">View</button>
+                </router-link>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
 <script>
 import store from "./views/store";
 import AddCountry from "@/components/AddCountry";
-import Home from "./views/Home";
+// import CountryDetails from "@/views/CountryDetails";
 
 
 export default {
   name: "App",
   components: {
     AddCountry,
-    Home,
+    // CountryDetails,
   },
   data() {
     return {
       showInputCountry: false,
       destinations: store.destinations,
       destinationId: this.$route.params.id,
+      showIndividualCountry: false,
+      neverShow: false,
     }
   },
   computed: {
@@ -68,7 +77,8 @@ export default {
       return store.destinations.find(
           destination => destination.id === this.destinationId
       )
-    }
+    },
+
   },
   methods: {
 
@@ -80,7 +90,7 @@ export default {
         name: newCountry.name,
         slug: 'brazil',
         image: 'brazil.jpg',
-        id: this.destinations.length - 1 + 1,
+        id: this.destinations.length + 1,
         description: newCountry.description,
         experiences: [{
           name: 'New Country new Experiences',
@@ -89,11 +99,19 @@ export default {
           description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'
         }]
       })
+      this.showInputCountry = !this.showInputCountry;
       console.log(this.destinations)
     },
     deleteCountry(index) {
       this.destinations.splice(index, 1)
+    },
+    toggleShowIndividual() {
+      this.showIndividualCountry = !this.showIndividualCountry;
+    },
+    showAgain() {
+      this.showIndividualCountry = !this.showIndividualCountry;
     }
+
   }
 }
 
@@ -110,7 +128,15 @@ export default {
   border: red 5px solid;
   height: 20rem;
   width: 14rem;
+}
 
+.backButton {
+  border: 1px red solid;
+  height: 2rem;
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 5px 0px 0px 5px;
 }
 
 .secondWrapper {
