@@ -1,24 +1,22 @@
 <template>
-  <div class="overallCountry grid grid-cols-1 justify-center">
-    <div class="countryName flex justify-center mt-6">
-      <p :class="{favoriteClass: favouriteCountry}"  class="text-2xl">Welcome to {{ getCountryDetails.name }} </p>
+  <div class="overallCountry flex flex-col items-center">
+    <div class="countryName w-80 mt-6">
+      <p :class="{favoriteClass: isFavorite}" class="text-2xl flex justify-center">Welcome to {{ getCountryDetails.name }} </p>
     </div>
     <div class="countryImage flex justify-center mt-6">
-      <img :src="require(`../assets/${getCountryDetails.image}`)" :alt="getCountryDetails.name">
+      <img class="min-w-full" :src="require(`../assets/${getCountryDetails.image}`)" :alt="getCountryDetails.name">
     </div>
-    <div class="countryDetails flex justify-center mt-6">
-      <p flex text-center>{{ getCountryDetails.description }}</p>
+    <div class="countryDetails flex content-center mt-6">
+      <p class="text-center">{{ getCountryDetails.description }}</p>
     </div>
-    <div class="favoriteCountry mt-6">
-      <form @submit.prevent="changeFavourite">
-        <button type="checkbox" class="text-2xl">Add to favorites</button>
-      </form>
+    <div class="favoriteCountry w-52 flex justify-center mt-6">
+        <button type="button" @click="emitAction(isFavorite)" class="text-2xl">Add to favorites</button>
     </div>
   </div>
 </template>
 
 <script>
-
+import vuexStore from "../store/index";
 import store from "./store";
 
 export default {
@@ -29,12 +27,18 @@ export default {
       countryId: this.$route.params.id,
       countryDetails: store.destinations,
       favouriteCountry: store.destinations.isFavorite,
+      isActive: vuexStore.state.isActive,
+      isFavorite: store.destinations.isFavorite,
     }
   },
   methods: {
-    changeFavourite() {
-      this.favouriteCountry = !this.favouriteCountry;
-      console.log(this.favouriteCountry)
+    emitAction(isFavorite) {
+      this.$emit('emit-action', isFavorite);
+      isFavorite = !isFavorite;
+      console.log(isFavorite)
+    },
+    changeStatus() {
+      this.$store.dispatch('changeStatus');
     }
   },
   computed: {
@@ -59,5 +63,6 @@ export default {
 .favoriteClass {
   background-color: red;
 }
+
 
 </style>

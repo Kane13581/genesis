@@ -1,19 +1,7 @@
 <template>
   <div id="app">
     <div class="overallContainer flex justify-center min-h-screen bg-yellow-300 p-10">
-      <div class="backButton hover:shadow-lg">
-      <button class="text-2xl" @click="showAgain" v-if="showIndividualCountry">
-        <router-link to="/">
-          Back
-        </router-link>
-      </button>
-      </div>
-
-      <div v-if="showIndividualCountry" class="routerViewContainer">
-        <router-view>
-        </router-view>
-      </div>
-      <div v-else class="navContainer md:relative flex-grow h-11/12 md:w-3/4">
+      <div class="navContainer md:relative flex-grow h-11/12 md:w-3/4">
         <div class="wrapper md:flex">
           <div class="inputContainer relative md:flex md:flex-col md:w-1/2 h-32 ">
             <p>Favorites here</p>
@@ -28,24 +16,7 @@
             </div>
           </div>
         </div>
-        <div class="secondWrapper grid justify-center">
-          <div
-              class="mainContainer md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-28 justify-center h-4/6 md:h-5/6 md:w-full">
-            <div class="card" v-for="(destination, index) in destinations || []" :key="index">
-              <div class="countryName flex justify-center">
-                <p class="text-2xl">{{ destination.name }}</p>
-              </div>
-              <img class="imageStyle h-48" :src="require(`./assets/${destination.image}`)" :alt="destination.name">
-              <p class="ml-1 truncate">{{ destination.description }}</p>
-              <div class="imageButtonContainer flex justify-around mt-3">
-                <button @click="deleteCountry(index)" class="text-2xl hover:shadow-lg ">Delete</button>
-                <router-link :to="`/countries/${destination.id}`">
-                  <button class="text-2xl hover:shadow-lg" @click="toggleShowIndividual">View</button>
-                </router-link>
-              </div>
-            </div>
-          </div>
-        </div>
+        <CountryList />
       </div>
     </div>
 
@@ -55,33 +26,24 @@
 <script>
 import store from "./views/store";
 import AddCountry from "@/components/AddCountry";
-
-
+import CountryList from "@/components/CountryList";
 
 export default {
   name: "App",
   components: {
     AddCountry,
+    CountryList,
   },
   data() {
     return {
       showInputCountry: false,
       destinations: store.destinations,
-      destinationId: this.$route.params.id,
-      showIndividualCountry: false,
-      neverShow: false,
+      isFavorite: store.destinations.isFavorite,
     }
   },
   computed: {
-    destination() {
-      return store.destinations.find(
-          destination => destination.id === this.destinationId
-      )
-    },
-
   },
   methods: {
-
     toggleNewCountry() {
       this.showInputCountry = !this.showInputCountry;
     },
@@ -102,19 +64,6 @@ export default {
       this.showInputCountry = !this.showInputCountry;
       console.log(this.destinations)
     },
-    deleteCountry(index) {
-      this.destinations.splice(index, 1)
-    },
-    toggleShowIndividual() {
-      this.showIndividualCountry = !this.showIndividualCountry;
-    },
-    showAgain() {
-      this.showIndividualCountry = !this.showIndividualCountry;
-    },
-    createFavorite(destinations) {
-     destinations.isFavorite = !destinations.isFavorite;
-     console.log(destinations.isFavorite)
-    }
   },
   created() {
     this.destinations.forEach(function (element) {
@@ -132,28 +81,10 @@ export default {
   border: green solid 5px;
 }
 
-.card {
-  margin-top: 3rem;
-  border: red 5px solid;
-  height: 20rem;
-  width: 14rem;
-}
-
 .favoriteClass {
   background-color: red;
 }
 
-.backButton {
-  height: 2rem;
-  position: absolute;
-  left: 0;
-  top: 0;
-  margin: 5px 0px 0px 8px;
-}
-
-.secondWrapper {
-  border: 1px white solid;
-}
 
 .navContainer {
   /*border: solid red 5px;*/
