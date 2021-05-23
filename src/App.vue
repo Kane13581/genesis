@@ -2,12 +2,13 @@
   <div id="app">
     <div class="overallContainer flex justify-center min-h-screen bg-yellow-300 p-10">
       <div class="backButton hover:shadow-lg">
-      <button @click="showAgain" v-if="showIndividualCountry">
+      <button class="text-2xl" @click="showAgain" v-if="showIndividualCountry">
         <router-link to="/">
           Back
         </router-link>
       </button>
       </div>
+
       <div v-if="showIndividualCountry" class="routerViewContainer">
         <router-view>
         </router-view>
@@ -54,14 +55,13 @@
 <script>
 import store from "./views/store";
 import AddCountry from "@/components/AddCountry";
-// import CountryDetails from "@/views/CountryDetails";
+
 
 
 export default {
   name: "App",
   components: {
     AddCountry,
-    // CountryDetails,
   },
   data() {
     return {
@@ -110,8 +110,17 @@ export default {
     },
     showAgain() {
       this.showIndividualCountry = !this.showIndividualCountry;
+    },
+    createFavorite(destinations) {
+     destinations.isFavorite = !destinations.isFavorite;
+     console.log(destinations.isFavorite)
     }
-
+  },
+  created() {
+    this.destinations.forEach(function (element) {
+      element.isFavorite = false;
+    })
+    console.log(this.destinations)
   }
 }
 
@@ -130,13 +139,16 @@ export default {
   width: 14rem;
 }
 
+.favoriteClass {
+  background-color: red;
+}
+
 .backButton {
-  border: 1px red solid;
   height: 2rem;
   position: absolute;
   left: 0;
   top: 0;
-  margin: 5px 0px 0px 5px;
+  margin: 5px 0px 0px 8px;
 }
 
 .secondWrapper {
