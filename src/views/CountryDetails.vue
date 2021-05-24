@@ -1,16 +1,28 @@
 <template>
   <div class="overallCountry flex flex-col items-center">
     <div class="countryName w-80 mt-6">
-      <p :class="{favoriteClass: isFavorite}" class="text-2xl flex justify-center">Welcome to {{ getCountryDetails.name }} </p>
+      <p v-if="!showEditContent" :class="{favoriteClass: isFavorite}" class="text-2xl flex justify-center">Welcome to {{ getCountryDetails.name }} </p>
+      <input v-model="newCountryName" class="text-2xl flex justify-center" v-else placeholder="Country Name">
     </div>
     <div class="countryImage flex justify-center mt-6">
       <img class="min-w-full" :src="require(`../assets/${getCountryDetails.image}`)" :alt="getCountryDetails.name">
     </div>
     <div class="countryDetails flex content-center mt-6">
-      <p class="text-center">{{ getCountryDetails.description }}</p>
+      <p v-if="!showEditContent" class="text-center">{{ getCountryDetails.description }}</p>
+      <input v-model="newCountryDetails" class="text-2xl flex justify-center" v-else placeholder="Country Description">
+    </div>
+    <div class="countryExperiences">
+      <p class="text-center">{{ getCountryDetails.experiences.name }}</p>
+    </div>
+    <div class="editAction">
+      <button class="absolute left-0 text-2xl mt-5" @click="emitEditAction">Edit</button>
+      <div v-if="showEditContent">
+      <button class="text-2xl mt-6 mr-16" @click="emitSaveAction(countryId)">Save</button>
+      <button class="text-2xl" @click="cancelEdit">Cancel</button>
+      </div>
     </div>
     <div class="favoriteCountry w-52 flex justify-center mt-6">
-        <button type="button" @click="emitAction(isFavorite)" class="text-2xl">Add to favorites</button>
+        <button type="button" @click="addToFavourite(countryId)" class="text-2xl mt-16 font-bold">Add to favorites</button>
     </div>
   </div>
 </template>
@@ -26,16 +38,35 @@ export default {
     return {
       countryId: this.$route.params.id,
       countryDetails: store.destinations,
-      favouriteCountry: store.destinations.isFavorite,
       isActive: vuexStore.state.isActive,
       isFavorite: store.destinations.isFavorite,
+      showEditContent: false,
+      newCountryName: '',
+      newCountryDetails: '',
+      destinationId: store.destinations.id,
     }
   },
   methods: {
-    emitAction(isFavorite) {
-      this.$emit('emit-action', isFavorite);
-      isFavorite = !isFavorite;
-      console.log(isFavorite)
+    emitSaveAction(countryId) {
+      const newEditedCountry = {
+        ...this.destinations,
+        name: this.newCountryName,
+        description: this.newCountryDetails,
+      }
+      this.$emit('emit-save-action', countryId, newEditedCountry);
+      this.showEditContent = !this.showEditContent;
+      console.log(countryId, newEditedCountry)
+    },
+    cancelEdit() {
+      this.showEditContent = !this.showEditContent;
+    },
+    emitEditAction() {
+      this.showEditContent = !this.showEditContent;
+    },
+    addToFavourite(countryId) {
+      this.$emit('emit-action', countryId);
+      this.isFavorite = !this.isFavorite;
+      // console.log(this.isFavorite, countryId)
     },
     changeStatus() {
       this.$store.dispatch('changeStatus');
@@ -59,6 +90,10 @@ export default {
 
 
 <style scoped>
+
+.editAction {
+
+}
 
 .favoriteClass {
   background-color: red;
