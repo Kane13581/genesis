@@ -49,13 +49,20 @@ export default {
   methods: {
     emitSaveAction(countryId) {
       const newEditedCountry = {
-        ...this.destinations,
         name: this.newCountryName,
+        slug: 'brazil',
+        image: 'brazil.jpg',
+        id: this.countryDetails.length + 1,
         description: this.newCountryDetails,
+        experiences: [{
+          name: 'New Country new Experiences',
+          slug: 'Eden',
+          image: '',
+          description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'
+        }]
       }
       this.$emit('emit-save-action', countryId, newEditedCountry);
       this.showEditContent = !this.showEditContent;
-      console.log(countryId, newEditedCountry)
     },
     cancelEdit() {
       this.showEditContent = !this.showEditContent;

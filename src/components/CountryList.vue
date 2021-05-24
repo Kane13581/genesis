@@ -29,7 +29,6 @@
           <router-link :to="`/countries/${destination.id}`">
             <button class="text-2xl hover:shadow-lg" @click="toggleShowIndividual">View</button>
           </router-link>
-          <button v-if="!showIndividualCountry" @click="turnThisFav(destination)">Favourite</button>
         </div>
       </div>
     </div>
@@ -56,40 +55,18 @@ export default {
   computed: {
   },
   methods: {
-    turnThisFav(destination) {
-      destination.isFavorite = !destination.isFavorite;
-      console.log(destination)
-    },
     addFavourite(countryId) {
-     let x = this.destinations.filter(({ id } ) => {
+     let x = this.destinations.filter(( { id } ) => {
        return id.toString() === countryId.toString();
       })
-      x[0].isFavorite = true;
+      x[0].isFavorite = !x[0].isFavorite;
       console.log(x, countryId)
       },
 
-
     saveFunction(countryId, newEditedCountry) {
-      this.destinations.splice(countryId, 1, newEditedCountry)
-
+      this.destinations.splice(countryId -1, 1 , newEditedCountry)
+      console.log(newEditedCountry)
     },
-    // addFavourite(countryId) {
-    //   let favouriteCountry = this.destinations.filter((destination) => {
-    //     return destination.id.toString() === countryId.toString()
-    //   })
-    //   return favouriteCountry[0];
-    // },
-    // addFavourite() {
-    //   console.log(this.destinationId, this.isFavorite)
-      // let x = this.countryDetails.filter((country) => {
-      //   return country.id.toString() === this.countryId.toString()
-      // })
-      // return x[0]
-      // if (countryId === this.destinations.id) {
-      //   this.isFavorite = true;
-      // }
-      // console.log(countryId,  this.isFavorite)
-    // },
 
     deleteCountry(index) {
       this.destinations.splice(index, 1)
