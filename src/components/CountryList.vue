@@ -14,20 +14,26 @@
       </div>
     </div>
     <div v-if="!showIndividualCountry" class="navC">
-      <NavComponent />
+      <NavComponent/>
     </div>
     <div v-if="!showIndividualCountry"
          class="mainContainer md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-28 justify-center h-4/6 md:h-5/6 md:w-full">
-      <div class="card" v-for="(destination, index) in destinations || []" :key="index">
+      <div class="card sm:w-60 md:w-56" v-for="(destination, index) in destinations || []" :key="index">
         <div class="countryName flex justify-center">
           <p :class="{favoriteClass: destination.isFavorite}" class="text-2xl">{{ destination.name }}</p>
         </div>
-        <img class="imageStyle h-48" :src="require(`../assets/${destination.image}`)" :alt="destination.name">
-        <p class="ml-1 truncate">{{ destination.description }}</p>
+        <div class="imageContainer flex justify-center">
+          <img class="imageStyle h-64 md:h-48 p-2" :src="require(`../assets/${destination.image}`)" :alt="destination.name">
+        </div>
+        <div class="h-3">
+          <p class="ml-4 descriptionStyle ml-1 text-center text-xs">{{ destination.description }}</p>
+        </div>
         <div class="imageButtonContainer flex justify-around mt-3">
-          <button @click="deleteCountry(index)" class="text-2xl hover:shadow-lg ">Delete</button>
+          <button @click="deleteCountry(index)" class="mt-11 mb-3 w-12 hover:bg-red-400 rounded hover:shadow-lg ">Delete
+          </button>
           <router-link :to="`/countries/${destination.id}`">
-            <button class="text-2xl hover:shadow-lg" @click="toggleShowIndividual">View</button>
+            <button class="mt-11 w-12 mb-3 hover:shadow-lg rounded hover:bg-green-400" @click="toggleShowIndividual">View
+            </button>
           </router-link>
         </div>
       </div>
@@ -52,19 +58,18 @@ export default {
       destinationId: store.destinations.id,
     }
   },
-  computed: {
-  },
+  computed: {},
   methods: {
     addFavourite(countryId) {
-     let x = this.destinations.filter(( { id } ) => {
-       return id.toString() === countryId.toString();
+      let x = this.destinations.filter(({id}) => {
+        return id.toString() === countryId.toString();
       })
       x[0].isFavorite = !x[0].isFavorite;
       console.log(x, countryId)
-      },
+    },
 
     saveFunction(countryId, newEditedCountry) {
-      this.destinations.splice(countryId -1, 1 , newEditedCountry)
+      this.destinations.splice(countryId - 1, 1, newEditedCountry)
       console.log(newEditedCountry)
     },
 
@@ -89,13 +94,29 @@ export default {
 
 <style scoped>
 
+html {
+  --1h: 1.4rem;
+  line-height: var(--1h);
+}
+
+.descriptionStyle {
+  --max-lines: 2;
+  position: relative;
+  max-height: 4.1rem;
+  overflow: hidden;
+  padding-right: 1rem; /* space for ellipsis */
+}
+
+.imageContainer {
+
+}
 
 .card {
   margin-top: 3rem;
-  /*border: red 5px solid;*/
+  /*border: red 1px solid;*/
   box-shadow: 3px 4px 5px 4px #918b8b;
-  height: 20rem;
-  width: 14rem;
+  /*height: 20rem;*/
+  /*width: 14rem;*/
 }
 
 .favoriteClass {

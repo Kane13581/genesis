@@ -4,12 +4,12 @@
       <p>Favorites here</p>
     </div>
     <div class="topRightTab md:w-1/2 h-32 relative grid justify-center">
-      <div class="favButtonCont h-10 mt-1 md:w-1/5 md:absolute">
-        <button class="buttonStyle md:absolute border-none rounded-3xl bg-gray-400 w-20">Favorites</button>
+      <div class="favButtonCont h-10 mt-1 md:w-1/5 ">
+        <button class="buttonStyle border-none md:absolute md:right-0 rounded-3xl bg-gray-400 w-20">Favorites</button>
       </div>
-      <div class="newButtonCont h-10 md:w-1/5 md:absolute">
-        <button class="buttonStyle md:absolute border-none rounded-3xl bg-gray-400 w-20" @click="toggleNewCountry">New</button>
-        <AddCountry @add-new-country="addNewCountry" v-if="showInputCountry"/>
+      <div class="newButtonCont h-10 md:w-1/5 ">
+        <button v-if="!showInputCountry" class="buttonStyle border-none md:absolute md:right-0 rounded-3xl bg-gray-400 w-20" @click="toggleNewCountry">New</button>
+        <AddCountry @emit-close-input="closeInput" @add-new-country="addNewCountry" v-else/>
       </div>
     </div>
   </div>
@@ -35,7 +35,7 @@ export default {
       this.showInputCountry = !this.showInputCountry;
     },
     addNewCountry(newCountry) {
-      this.destinations.push({
+      this.destinations.unshift({
         name: newCountry.name,
         slug: 'brazil',
         image: 'brazil.jpg',
@@ -50,6 +50,9 @@ export default {
       })
       this.showInputCountry = !this.showInputCountry;
       console.log(this.destinations)
+    },
+    closeInput() {
+      this.showInputCountry = !this.showInputCountry;
     },
   }
 }
