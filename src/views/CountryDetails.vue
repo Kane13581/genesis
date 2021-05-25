@@ -17,14 +17,14 @@
     <div class="editAction">
       <button class="absolute left-0 text-2xl mt-5" @click="emitEditAction">Edit</button>
       <div v-if="showEditContent">
-      <button class="text-2xl mt-6 mr-16" @click="emitSaveAction(countryId)">Save</button>
-      <button class="text-2xl" @click="cancelEdit">Cancel</button>
+        <button class="text-2xl mt-6 mr-16" @click="emitSaveAction(countryId)">Save</button>
+        <button class="text-2xl" @click="cancelEdit">Cancel</button>
       </div>
     </div>
     <div class="favoriteCountry w-72 flex justify-center mt-6">
-        <button type="button" @click="addToFavourite(countryId); displayMessage(); toggleText()" class="mt-16 font-bold">
-          {{ messageText ? 'Add to favourites.' : 'Remove from favourites.' }}
-        </button>
+      <button type="button" @click="addToFavourite(countryId); displayMessage(); toggleText()" class="mt-16 font-bold">
+        {{ messageText ? 'Add to favourites.' : 'Remove from favourites.' }}
+      </button>
     </div>
     <div v-if="favMessage" class="hidingDiv w-64 md:ml-96 h-24 md:h-44 md:absolute top-0">
       <p class="flex justify-center mt-6 md:absolute text-center md:mt-0 md:top-0 md:right-0">{{ messageText ? 'Country removed from favourites.' : 'Country added to favourites.' }}</p>
@@ -35,9 +35,7 @@
 <script>
 import vuexStore from "../store/index";
 import store from "./store";
-
 export default {
-
   name: "CountryDetails",
   props: {
     messageText: Boolean,
@@ -75,6 +73,7 @@ export default {
       }
       this.$emit('emit-save-action', countryId, newEditedCountry);
       this.showEditContent = !this.showEditContent;
+      console.log(countryId, newEditedCountry);
     },
     cancelEdit() {
       this.showEditContent = !this.showEditContent;
@@ -108,20 +107,15 @@ export default {
       return x[0]
     },
   },
-
-
 };
 </script>
 
 
 <style scoped>
-
 .favoriteClass {
   /*background-color: red;*/
 }
-
 .hidingDiv {
   /*border: 1px red solid;*/
 }
-
 </style>
