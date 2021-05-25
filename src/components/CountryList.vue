@@ -14,7 +14,7 @@
       </div>
     </div>
     <div v-if="!showIndividualCountry" class="navC">
-      <NavComponent/>
+      <NavComponent @emit-toggle-favourite="toggleFavoriteList"/>
     </div>
     <div v-if="!showIndividualCountry"
          class="mainContainer md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-28 justify-center h-4/6 md:h-5/6 md:w-full">
@@ -42,6 +42,9 @@
           </div>
         </div>
       </div>
+  </div>
+    <div v-else class="favouritesContainer"  v-for="(item, index) in createFavouriteList" :key="index">
+      {{item.name}}
     </div>
   </div>
 </template>
@@ -63,8 +66,21 @@ export default {
       destinationId: store.destinations.id,
     }
   },
-  computed: {},
+  computed: {
+    createFavouriteList() {
+     return this.destinations.filter( item => {
+       if (item.isFavorite === true) {
+         return true
+       } else {
+         return false
+       }
+     })
+    }
+  },
   methods: {
+    toggleFavoriteList() {
+      this.showIndividualCountry = !this.showIndividualCountry;
+    },
     addFavourite(countryId) {
       let x = this.destinations.filter(({id}) => {
         return id.toString() === countryId.toString();
