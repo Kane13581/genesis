@@ -21,8 +21,13 @@
       <button class="text-2xl" @click="cancelEdit">Cancel</button>
       </div>
     </div>
-    <div class="favoriteCountry w-52 flex justify-center mt-6">
-        <button type="button" @click="addToFavourite(countryId)" class="text-2xl mt-16 font-bold">Add to favorites</button>
+    <div class="favoriteCountry w-72 flex justify-center mt-6">
+        <button type="button" @click="addToFavourite(countryId); displayMessage(); toggleText()" class="mt-16 font-bold">
+          {{ messageText ? 'Add to favourites.' : 'Remove from favourites.' }}
+        </button>
+    </div>
+    <div v-if="favMessage" class="hidingDiv w-64 md:ml-96 h-24 md:h-44 md:absolute top-0">
+      <p class="flex justify-center mt-6 md:absolute text-center md:mt-0 md:top-0 md:right-0">{{ messageText ? 'Country removed from favourites.' : 'Country added to favourites.' }}</p>
     </div>
   </div>
 </template>
@@ -34,6 +39,9 @@ import store from "./store";
 export default {
 
   name: "CountryDetails",
+  props: {
+    messageText: Boolean,
+  },
   data() {
     return {
       countryId: this.$route.params.id,
@@ -44,9 +52,13 @@ export default {
       newCountryName: '',
       newCountryDetails: '',
       destinationId: store.destinations.id,
+      favMessage: false,
     }
   },
   methods: {
+    toggleText() {
+      this.$emit('emit-toggleButton');
+    },
     emitSaveAction(countryId) {
       const newEditedCountry = {
         name: this.newCountryName,
@@ -77,6 +89,12 @@ export default {
     },
     changeStatus() {
       this.$store.dispatch('changeStatus');
+    },
+    displayMessage() {
+      this.favMessage = true;
+      setTimeout(() => {
+        this.favMessage = false;
+      }, 2000)
     }
   },
   computed: {
@@ -98,13 +116,12 @@ export default {
 
 <style scoped>
 
-.editAction {
-
-}
-
 .favoriteClass {
-  background-color: red;
+  /*background-color: red;*/
 }
 
+.hidingDiv {
+  /*border: 1px red solid;*/
+}
 
 </style>

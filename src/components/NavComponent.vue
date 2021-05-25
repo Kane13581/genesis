@@ -1,11 +1,11 @@
 <template>
   <div class="wrapper md:flex">
     <div class="inputContainer relative md:flex md:flex-col md:w-1/2 h-32 ">
-      <p>Favorites here</p>
+      <p></p>
     </div>
     <div class="topRightTab md:w-1/2 h-32 relative grid justify-center">
       <div class="favButtonCont h-10 mt-1 md:w-1/5 ">
-        <button @click="toggleFavoriteCountry" class="buttonStyle border-none md:absolute md:right-0 rounded-3xl bg-gray-400 w-20">Favorites</button>
+        <button @click="toggleFavoriteCountry" class="buttonStyle border-none md:absolute md:right-0 rounded-3xl bg-gray-400 w-20">{{ toggleFavourite ? 'Favourites' : 'Back to list' }}</button>
       </div>
       <div class="newButtonCont h-10 md:w-1/5 ">
         <button v-if="!showInputCountry" class="buttonStyle border-none md:absolute md:right-0 rounded-3xl bg-gray-400 w-20" @click="toggleNewCountry">New</button>
@@ -23,6 +23,9 @@ export default {
   name: "NavComponent",
   components: {
     AddCountry
+  },
+  props: {
+    toggleFavourite: Boolean,
   },
   data() {
     return {
